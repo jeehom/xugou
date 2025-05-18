@@ -14,6 +14,18 @@ export interface D1PreparedStatement {
   raw<T = unknown>(): Promise<T[]>;
 }
 
+// 定义操作结果的元数据类型
+export interface DbResultMeta {
+  changes?: number;
+  [key: string]: any;
+}
+
+// 扩展D1Result meta属性的类型
+export interface D1Meta {
+  last_row_id?: number;
+  changes?: number;
+}
+
 export interface D1Result<T = unknown> {
   results?: T[];
   success: boolean;
@@ -21,7 +33,16 @@ export interface D1Result<T = unknown> {
   meta?: object;
 }
 
+// 版本元数据类型定义
+export interface VersionMetadata {
+  id?: string;
+  tag?: string;
+  timestamp?: string;
+  [key: string]: any;
+}
+
 // 通用绑定类型
 export type Bindings = {
   DB: D1Database;
-}; 
+  CF_VERSION_METADATA?: VersionMetadata;
+};
